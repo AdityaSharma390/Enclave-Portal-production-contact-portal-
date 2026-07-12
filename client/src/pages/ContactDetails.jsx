@@ -4,7 +4,7 @@ import { ArrowLeft, Edit, Trash2, Mail, Phone, Building, MapPin, FileText, Calen
 import { getContactById, deleteContact } from '../services/contactService.js';
 import { ProfileSkeleton } from '../components/Skeleton.jsx';
 import ConfirmModal from '../components/ConfirmModal.jsx';
-import { getInitials, getAvatarColor, formatDate } from '../utils/helpers.js';
+import { getInitials, getAvatarColor, formatDate, getImageUrl } from '../utils/helpers.js';
 
 const ContactDetails = () => {
   const { id } = useParams();
@@ -103,7 +103,7 @@ const ContactDetails = () => {
         <div className="glass-card p-6 rounded-2xl md:col-span-4 flex flex-col items-center text-center">
           {contact.profileImage ? (
             <img
-              src={contact.profileImage}
+              src={getImageUrl(contact.profileImage)}
               alt={`${name} avatar`}
               className="w-28 h-28 rounded-full object-cover border-2 border-brand-500/20 shadow-md mb-4"
             />

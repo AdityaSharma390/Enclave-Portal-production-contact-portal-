@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Users, UserCheck, Activity, Plus, ArrowRight, Mail, Phone, Calendar } from 'lucide-react';
 import { getDashboardStats } from '../services/contactService.js';
 import { StatsSkeleton } from '../components/Skeleton.jsx';
-import { getInitials, getAvatarColor, formatDate } from '../utils/helpers.js';
+import { getInitials, getAvatarColor, formatDate, getImageUrl } from '../utils/helpers.js';
 import useAuth from '../hooks/useAuth.js';
 
 const Dashboard = () => {
@@ -149,7 +149,7 @@ const Dashboard = () => {
                 >
                   {contact.profileImage ? (
                     <img
-                      src={contact.profileImage}
+                      src={getImageUrl(contact.profileImage)}
                       alt={`${contact.firstName} avatar`}
                       className="w-10 h-10 rounded-full object-cover shadow-sm border border-slate-200/50 dark:border-brand-800/30"
                     />

@@ -41,3 +41,16 @@ export const getAvatarColor = (name) => {
   
   return `hsl(${h}, ${s}%, ${l}%)`;
 };
+
+/**
+ * Resolves local fallback image URLs to point directly to the backend URL on production
+ */
+export const getImageUrl = (imagePath) => {
+  if (!imagePath) return '';
+  if (imagePath.startsWith('http://') || imagePath.startsWith('https://') || imagePath.startsWith('data:')) {
+    return imagePath;
+  }
+  const backendUrl = import.meta.env.VITE_API_URL || '';
+  const originUrl = backendUrl.endsWith('/api') ? backendUrl.slice(0, -4) : backendUrl;
+  return `${originUrl}${imagePath}`;
+};

@@ -4,7 +4,7 @@ import { Search, Plus, SlidersHorizontal, ArrowUpDown, ChevronLeft, ChevronRight
 import { getContacts, deleteContact } from '../services/contactService.js';
 import { TableSkeleton } from '../components/Skeleton.jsx';
 import ConfirmModal from '../components/ConfirmModal.jsx';
-import { getInitials, getAvatarColor } from '../utils/helpers.js';
+import { getInitials, getAvatarColor, getImageUrl } from '../utils/helpers.js';
 
 const ContactsList = () => {
   const [contacts, setContacts] = useState([]);
@@ -216,7 +216,7 @@ const ContactsList = () => {
                       <div className="flex items-center gap-3">
                         {contact.profileImage ? (
                           <img
-                            src={contact.profileImage}
+                            src={getImageUrl(contact.profileImage)}
                             alt={`${contact.firstName} avatar`}
                             className="w-9 h-9 rounded-full object-cover border border-slate-200/50 dark:border-brand-850/40 shadow-sm"
                           />

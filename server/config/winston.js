@@ -56,18 +56,16 @@ const logger = winston.createLogger({
   transports,
 });
 
-// Add console transport in development
-if (process.env.NODE_ENV !== 'production') {
-  logger.add(
-    new winston.transports.Console({
-      format: winston.format.combine(
-        winston.format.colorize({ all: true }),
-        winston.format.printf(
-          (info) => `${info.timestamp} ${info.level}: ${info.message}`
-        )
-      ),
-    })
-  );
-}
+// Add console transport to all environments (crucial for cloud platform logging like Render)
+logger.add(
+  new winston.transports.Console({
+    format: winston.format.combine(
+      winston.format.colorize({ all: true }),
+      winston.format.printf(
+        (info) => `${info.timestamp} ${info.level}: ${info.message}`
+      )
+    ),
+  })
+);
 
 export default logger;
