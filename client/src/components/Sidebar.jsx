@@ -8,10 +8,10 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
   const { user, logout } = useAuth();
 
   const navItems = [
-    { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
-    { name: 'Contacts List', path: '/contacts', icon: Users },
-    { name: 'Create Contact', path: '/contacts/new', icon: UserPlus },
-    { name: 'My Profile', path: '/profile', icon: User },
+    { name: 'Home', path: '/dashboard', icon: LayoutDashboard },
+    { name: 'Contacts', path: '/contacts', icon: Users },
+    { name: 'Add New', path: '/contacts/new', icon: UserPlus },
+    { name: 'Profile', path: '/profile', icon: User },
   ];
 
   return (
@@ -25,61 +25,43 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
       )}
 
       <aside
-        className={`fixed inset-y-0 left-0 z-40 flex flex-col w-64 bg-slate-900 text-slate-300 border-r border-slate-800 transition-transform duration-300 transform lg:translate-x-0 ${
+        className={`fixed inset-y-0 left-0 z-40 flex flex-col w-24 bg-[#0a1128] text-slate-400 border-r border-slate-800/80 transition-transform duration-300 transform lg:translate-x-0 ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
-        } lg:static lg:h-screen`}
+        } lg:static lg:h-screen lg:flex-shrink-0`}
       >
-        {/* Sidebar Header */}
-        <div className="flex items-center justify-between h-16 px-6 border-b border-slate-800 bg-slate-950">
-          <div className="flex items-center gap-2">
-            <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-brand-500 text-white font-display font-extrabold text-lg">
-              E
-            </div>
-            <span className="font-display font-bold tracking-tight text-white text-lg">
-              Enclave Portal
-            </span>
+        {/* Sidebar Header Logo */}
+        <div className="flex items-center justify-center h-16 border-b border-slate-800/60 bg-[#070b1a]">
+          <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-600 to-teal-400 text-white font-display font-extrabold text-lg shadow-md shadow-brand-500/10">
+            E
           </div>
           <button
             onClick={toggleSidebar}
-            className="p-1 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white lg:hidden"
+            className="p-1 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white lg:hidden absolute right-4"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        {/* User Info Badge */}
+        {/* User Avatar Circle */}
         {user && (
-          <div className="p-4 mx-4 my-4 rounded-xl bg-slate-950 border border-slate-800/80">
-            <div className="flex items-center gap-3">
-              <div
-                className="flex items-center justify-center w-10 h-10 rounded-full font-semibold text-white shadow-inner text-sm"
-                style={{ backgroundColor: getAvatarColor(user.fullName) }}
-              >
-                {getInitials(user.fullName)}
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-white truncate">
-                  {user.fullName}
-                </p>
-                <div className="flex items-center gap-1.5 mt-0.5">
-                  {user.role === 'Admin' ? (
-                    <span className="flex items-center gap-1 text-[10px] font-bold text-amber-400 bg-amber-400/10 px-1.5 py-0.5 rounded-full uppercase tracking-wider">
-                      <ShieldAlert className="w-3 h-3" />
-                      Admin
-                    </span>
-                  ) : (
-                    <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">
-                      User
-                    </span>
-                  )}
-                </div>
-              </div>
+          <div className="flex flex-col items-center py-5 border-b border-slate-800/40">
+            <div
+              className="flex items-center justify-center w-10 h-10 rounded-full font-bold text-white shadow-inner text-xs border border-slate-700/50"
+              style={{ backgroundColor: getAvatarColor(user.fullName) }}
+              title={user.fullName}
+            >
+              {getInitials(user.fullName)}
             </div>
+            {user.role === 'Admin' && (
+              <span className="text-[8px] font-bold text-teal-400 mt-1 uppercase tracking-widest bg-teal-400/10 px-1.5 py-0.5 rounded-full">
+                Admin
+              </span>
+            )}
           </div>
         )}
 
-        {/* Navigation Links */}
-        <nav className="flex-1 px-4 py-2 space-y-1 overflow-y-auto">
+        {/* Navigation Items (Icons stacked vertically with text below) */}
+        <nav className="flex-1 py-6 space-y-5 overflow-y-auto flex flex-col items-center">
           {navItems.map((item) => {
             const Icon = item.icon;
             return (
@@ -90,31 +72,46 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                   if (window.innerWidth < 1024) toggleSidebar();
                 }}
                 className={({ isActive }) =>
-                  `flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg transition-all duration-200 ${
+                  `flex flex-col items-center justify-center w-20 py-2.5 rounded-xl transition-all duration-200 gap-1.5 ${
                     isActive
-                      ? 'bg-brand-500/10 text-white border-l-4 border-brand-500 pl-3'
-                      : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200'
+                      ? 'bg-brand-500/10 text-white font-semibold'
+                      : 'text-slate-500 hover:bg-slate-800/30 hover:text-slate-300'
                   }`
                 }
               >
-                <Icon className="w-5 h-5 flex-shrink-0" />
-                {item.name}
+                {({ isActive }) => (
+                  <>
+                    <div
+                      className={`flex items-center justify-center w-10 h-10 rounded-xl transition-all duration-200 ${
+                        isActive
+                          ? 'bg-brand-500 text-white shadow-md shadow-brand-500/20'
+                          : 'bg-transparent text-slate-400 group-hover:text-slate-200'
+                      }`}
+                    >
+                      <Icon className="w-5 h-5" />
+                    </div>
+                    <span className="text-[9px] uppercase tracking-wider font-semibold">
+                      {item.name}
+                    </span>
+                  </>
+                )}
               </NavLink>
             );
           })}
         </nav>
 
         {/* Sidebar Footer Logout */}
-        <div className="p-4 border-t border-slate-800">
+        <div className="py-4 border-t border-slate-800/40 flex justify-center">
           <button
             onClick={() => {
               logout();
               if (window.innerWidth < 1024) toggleSidebar();
             }}
-            className="flex items-center gap-3 w-full px-4 py-3 text-sm font-medium text-slate-400 rounded-lg hover:bg-red-500/10 hover:text-red-400 transition-all duration-200"
+            title="Sign Out"
+            className="flex flex-col items-center justify-center w-20 py-2 rounded-xl text-slate-500 hover:bg-red-500/10 hover:text-red-400 transition-all duration-200 gap-1"
           >
-            <LogOut className="w-5 h-5 flex-shrink-0" />
-            Sign Out
+            <LogOut className="w-5 h-5" />
+            <span className="text-[8px] uppercase tracking-wider font-semibold">Exit</span>
           </button>
         </div>
       </aside>
