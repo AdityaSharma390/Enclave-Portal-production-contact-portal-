@@ -20,19 +20,19 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
       {isOpen && (
         <div
           onClick={toggleSidebar}
-          className="fixed inset-0 z-40 bg-slate-900/40 backdrop-blur-xs lg:hidden"
+          className="fixed inset-0 z-40 bg-black/60 backdrop-blur-xs lg:hidden"
         ></div>
       )}
 
       <aside
-        className={`fixed inset-y-0 left-0 z-40 flex flex-col w-64 bg-[#0a1128] text-slate-300 border-r border-slate-800/80 transition-transform duration-300 transform lg:translate-x-0 ${
+        className={`fixed inset-y-0 left-0 z-40 flex flex-col w-64 bg-black text-slate-300 border-r border-slate-900 transition-transform duration-300 transform lg:translate-x-0 ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         } lg:static lg:h-screen lg:flex-shrink-0`}
       >
         {/* Sidebar Header */}
-        <div className="flex items-center justify-between h-16 px-6 border-b border-slate-800/60 bg-[#070b1a]">
+        <div className="flex items-center justify-between h-16 px-6 border-b border-slate-900 bg-black">
           <div className="flex items-center gap-2">
-            <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-blue-600 text-white font-display font-extrabold text-lg">
+            <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-[#dffe00] text-black font-display font-extrabold text-lg">
               E
             </div>
             <span className="font-display font-bold tracking-tight text-white text-lg">
@@ -41,7 +41,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
           </div>
           <button
             onClick={toggleSidebar}
-            className="p-1 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-white lg:hidden"
+            className="p-1 rounded-lg text-slate-400 hover:bg-[#1c1c1e] hover:text-white lg:hidden"
           >
             <X className="w-5 h-5" />
           </button>
@@ -49,7 +49,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
         {/* User Info Badge */}
         {user && (
-          <div className="p-4 mx-4 my-4 rounded-xl bg-[#070b1a] border border-slate-800/80">
+          <div className="p-4 mx-4 my-4 rounded-xl bg-[#1c1c1e] border border-slate-800/80">
             <div className="flex items-center gap-3">
               <div
                 className="flex items-center justify-center w-10 h-10 rounded-full font-semibold text-white shadow-inner text-sm"
@@ -63,8 +63,8 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                 </p>
                 <div className="flex items-center gap-1.5 mt-0.5">
                   {user.role === 'Admin' ? (
-                    <span className="flex items-center gap-1 text-[10px] font-bold text-teal-400 bg-teal-400/10 px-1.5 py-0.5 rounded-full uppercase tracking-wider">
-                      <ShieldAlert className="w-3 h-3" />
+                    <span className="flex items-center gap-1 text-[10px] font-bold text-[#dffe00] bg-[#dffe00]/10 px-1.5 py-0.5 rounded-full uppercase tracking-wider">
+                      <ShieldAlert className="w-3.5 h-3.5" />
                       Admin
                     </span>
                   ) : (
@@ -79,7 +79,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         )}
 
         {/* Navigation Links */}
-        <nav className="flex-1 px-4 py-2 space-y-1 overflow-y-auto">
+        <nav className="flex-1 px-4 py-2 space-y-2 overflow-y-auto">
           {navItems.map((item) => {
             const Icon = item.icon;
             return (
@@ -90,10 +90,10 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                   if (window.innerWidth < 1024) toggleSidebar();
                 }}
                 className={({ isActive }) =>
-                  `flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg transition-all duration-200 ${
+                  `flex items-center gap-3 px-4 py-3.5 text-sm font-bold rounded-full transition-all duration-200 ${
                     isActive
-                      ? 'bg-blue-600/10 text-white border-l-4 border-blue-500 pl-3'
-                      : 'text-slate-400 hover:bg-slate-800/30 hover:text-slate-200'
+                      ? 'bg-[#dffe00] text-black shadow-md shadow-[#dffe00]/5'
+                      : 'text-slate-400 hover:bg-[#1c1c1e]/60 hover:text-white'
                   }`
                 }
               >
@@ -105,13 +105,13 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         </nav>
 
         {/* Sidebar Footer Logout */}
-        <div className="p-4 border-t border-slate-800/40">
+        <div className="p-4 border-t border-slate-900">
           <button
             onClick={() => {
               logout();
               if (window.innerWidth < 1024) toggleSidebar();
             }}
-            className="flex items-center gap-3 w-full px-4 py-3 text-sm font-medium text-slate-400 rounded-lg hover:bg-red-500/10 hover:text-red-400 transition-all duration-200"
+            className="flex items-center gap-3 w-full px-4 py-3 text-sm font-medium text-slate-400 rounded-full hover:bg-red-500/10 hover:text-red-400 transition-all duration-200"
           >
             <LogOut className="w-5 h-5 flex-shrink-0" />
             Sign Out

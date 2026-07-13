@@ -4,23 +4,21 @@
 
 @layer base {
   body {
-    @apply font-sans antialiased selection:bg-brand-500 selection:text-white;
+    @apply font-sans antialiased selection:bg-[#dffe00] selection:text-black bg-black text-white;
   }
   h1, h2, h3, h4, h5, h6 {
-    @apply font-display font-semibold tracking-tight;
+    @apply font-display font-semibold tracking-tight text-white;
   }
 }
 
 @layer components {
-  /* Premium glassmorphism utility classes */
+  /* Premium dark high-contrast components */
   .glass-card {
-    @apply bg-white/80 backdrop-blur-md border border-slate-200/50 shadow-xl shadow-slate-100/40
-           dark:bg-brand-900/60 dark:backdrop-blur-md dark:border-brand-800/40 dark:shadow-brand-950/50;
+    @apply bg-[#1c1c1e] border border-slate-800/80 shadow-2xl shadow-black/40 text-white rounded-2xl;
   }
   
   .glass-input {
-    @apply bg-white/70 border border-slate-300 rounded-lg px-4 py-2 text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-all duration-200
-           dark:bg-brand-900/40 dark:border-brand-800 dark:text-slate-200 dark:focus:ring-brand-500 dark:focus:border-brand-500;
+    @apply bg-black border border-slate-800 rounded-full px-5 py-3 text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-[#dffe00] focus:border-[#dffe00] transition-all;
   }
 
   /* Custom animated scrollbar */

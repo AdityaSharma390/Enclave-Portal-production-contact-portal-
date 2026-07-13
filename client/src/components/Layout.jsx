@@ -11,7 +11,7 @@ const Layout = () => {
   };
 
   return (
-    <div className="flex h-screen overflow-hidden bg-slate-50 dark:bg-brand-950 transition-colors duration-300">
+    <div className="flex h-screen overflow-hidden bg-black text-white">
       {/* Collapsible Sidebar Nav */}
       <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
 
