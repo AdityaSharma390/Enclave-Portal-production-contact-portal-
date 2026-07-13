@@ -3,34 +3,46 @@ import logger from './winston.js';
 
 export const seedDemoCredentials = async () => {
   try {
-    const userCount = await User.countDocuments({});
-    
-    if (userCount === 0) {
-      logger.info('No users found in database. Seeding default demo credentials...');
-      
-      // Create Demo Admin (password will be hashed by User model pre-save hook)
-      await User.create({
+    logger.info('Initializing workspace credentials verification...');
+
+    const seedAccounts = [
+      {
+        fullName: 'Dev Sharma',
+        email: 'dev1973sharma@gmail.com',
+        password: 'password123',
+        role: 'Admin',
+      },
+      {
         fullName: 'Demo Admin',
         email: 'admin@enclave.com',
         password: 'password123',
         role: 'Admin',
-      });
-
-      // Create Demo User
-      await User.create({
+      },
+      {
         fullName: 'Demo User',
         email: 'user@enclave.com',
         password: 'password123',
         role: 'User',
-      });
+      }
+    ];
 
-      logger.info('Demo credentials seeded successfully:');
-      logger.info('  Admin: admin@enclave.com / password123');
-      logger.info('  User:  user@enclave.com  / password123');
-    } else {
-      logger.info('Database already has users. Skipping seeder.');
+    for (const account of seedAccounts) {
+      const existingUser = await User.findOne({ email: account.email });
+      
+      if (!existingUser) {
+        // Create user if not present
+        await User.create(account);
+        logger.info(`Seeded credentials for: ${account.email} / password123 (Role: ${account.role})`);
+      } else {
+        // Enforce password sync to prevent "login is not working" issues
+        existingUser.password = account.password; // model pre-save hook will hash it
+        await existingUser.save();
+        logger.info(`Verified & synchronized credentials for: ${account.email} / password123`);
+      }
     }
+
+    logger.info('All workspace demo credentials verified and active.');
   } catch (error) {
-    logger.error(`Error seeding database: ${error.message}`);
+    logger.error(`Error verifying/seeding database credentials: ${error.message}`);
   }
 };
